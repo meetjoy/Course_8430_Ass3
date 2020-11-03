@@ -62,7 +62,7 @@ def confusion_matrix(class_match_set, class_nonmatch_set, true_match_set,
 
     if (rec_id_tuple in true_match_set):
       num_fn += 1
-
+  FN_in_Filtered_Pairs = num_fn
   # Finally count all missed true matches to the false negatives
   #
   for rec_id_tuple in true_match_set:
@@ -72,7 +72,7 @@ def confusion_matrix(class_match_set, class_nonmatch_set, true_match_set,
 
   num_tn = all_comparisons - num_tp - num_fp - num_fn
 
-  print('  TP=%s, FP=%d, FN=%d, TN=%d' % (num_tp, num_fp, num_fn, num_tn))
+  print('  TP=%s, FP=%d, FN=%d, TN=%d, FN_in_Filtered_Pairs=%d' % (num_tp, num_fp, num_fn, num_tn, FN_in_Filtered_Pairs))
   print('')
 
   return [num_tp, num_fp, num_fn, num_tn]

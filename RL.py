@@ -57,26 +57,29 @@ attrB_list    = [1,2,3,4,6,7,8,9,10,11]
 # The list of attributes to use for blocking (all must occur in the above attribute lists)
 
 # 1 -blocking attribute selection &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
-
-blocking_attrA_list = [1]
-blocking_attrB_list = [1]
+blocking_attrA_list = [7]
+blocking_attrB_list = [7]
+blocking_attrA_list_1 = [3]
+blocking_attrB_list_1 = [3]
+blocking_attrA_list_2 = [1]
+blocking_attrB_list_2 = [1]
 
 # 2 -comparison method selection &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
 # ******** In lab 4, explore different comparison functions for different attributes 
 # The list of tuples (comparison function, attribute number in record A, attribute number in record B)
-exact_comp_funct_list = [(comparison.exact_comp, 1, 1),  # First name
-                         (comparison.exact_comp, 2, 2),  # Middle name
-                         (comparison.exact_comp, 3, 3),  # Last name
-                         (comparison.exact_comp, 8, 8),  # Suburb
-                         (comparison.exact_comp,10,10),  # State
-                         ]
+# exact_comp_funct_list = [(comparison.exact_comp, 1, 1),  # First name
+#                          (comparison.exact_comp, 2, 2),  # Middle name
+#                          (comparison.exact_comp, 3, 3),  # Last name
+#                          (comparison.exact_comp, 8, 8),  # Suburb
+#                          (comparison.exact_comp,10,10),  # State
+#                          ]
 
-approx_comp_funct_list = [(comparison.jaccard_comp, 1, 1),        # First name
-                          (comparison.dice_comp, 2, 2),           # Middle name
+approx_comp_funct_list = [(comparison.jaro_winkler_comp, 1, 1),        # First name;jaccard_comp
+                          (comparison.jaro_winkler_comp, 2, 2),           # Middle name;dice_comp
                           (comparison.jaro_winkler_comp, 3, 3),   # Last name
                           (comparison.bag_dist_sim_comp, 7, 7),   # Address
-                          (comparison.edit_dist_sim_comp, 8, 8),  # Suburb
-                          (comparison.exact_comp, 10, 10),          # State
+                          (comparison.edit_dist_sim_comp, 8, 8),  # Suburb;edit_dist_sim_comp
+                        #   (comparison.exact_comp, 10, 10),        # State, Should be Okay. 
                          ]
 
 # =============================================================================
@@ -109,13 +112,19 @@ gender_attr_ind   = 4
 
 # blocking method 2： Phonetic (Soundex) based blocking
 
-# blockA_dict = blocking.phoneticBlocking(recA_dict, blocking_attrA_list)
-# blockB_dict = blocking.phoneticBlocking(recB_dict, blocking_attrB_list)
+blockA_dict = blocking.phoneticBlocking(recA_dict, blocking_attrA_list)
+blockB_dict = blocking.phoneticBlocking(recB_dict, blocking_attrB_list)
+
+# # combine into 1 dict
+blockA_dict_1 = blocking.phoneticBlocking(recA_dict, blocking_attrA_list_1)
+blockB_dict_1 = blocking.phoneticBlocking(recB_dict, blocking_attrB_list_1)
+blockA_dict_2 = blocking.phoneticBlocking(recA_dict, blocking_attrA_list_2)
+blockB_dict_2 = blocking.phoneticBlocking(recB_dict, blocking_attrB_list_2)
 
 # blocking method 3： Statistical linkage key (SLK-581) based blocking
 
-blockA_dict = blocking.slkBlocking(recA_dict, fam_name_attr_ind, giv_name_attr_ind, dob_attr_ind, gender_attr_ind)
-blockB_dict = blocking.slkBlocking(recB_dict, fam_name_attr_ind, giv_name_attr_ind, dob_attr_ind, gender_attr_ind)
+# blockA_dict = blocking.slkBlocking(recA_dict, fam_name_attr_ind, giv_name_attr_ind, dob_attr_ind, gender_attr_ind)
+# blockB_dict = blocking.slkBlocking(recB_dict, fam_name_attr_ind, giv_name_attr_ind, dob_attr_ind, gender_attr_ind)
 
 blocking_time = time.time() - start_time
 
@@ -126,7 +135,13 @@ blocking.printBlockStatistics(blockA_dict, blockB_dict)
 # -----------------------------------------------------------------------------
 # Step 3: Compare the candidate pairs
 start_time = time.time()
+# declare a null sim_vec_dict
 sim_vec_dict = comparison.compareBlocks(blockA_dict, blockB_dict, recA_dict, recB_dict, approx_comp_funct_list)
+
+# to add additional blocking records in
+sim_vec_dict = comparison.compareBlocks_add(blockA_dict_1, blockB_dict_1, recA_dict, recB_dict, approx_comp_funct_list, sim_vec_dict)
+sim_vec_dict = comparison.compareBlocks_add(blockA_dict_2, blockB_dict_2, recA_dict, recB_dict, approx_comp_funct_list, sim_vec_dict)
+
 comparison_time = time.time() - start_time
 
 # -----------------------------------------------------------------------------
@@ -136,12 +151,11 @@ start_time = time.time()
 # Exact matching based classification
 # class_match_set, class_nonmatch_set = \
 #              classification.exactClassify(sim_vec_dict)
-
 # classifier 1： Similarity threshold based classification
 
-sim_threshold = 0.5
-class_match_set, class_nonmatch_set = \
-            classification.thresholdClassify(sim_vec_dict, sim_threshold)
+# sim_threshold = 0.7
+# class_match_set, class_nonmatch_set = \
+#             classification.thresholdClassify(sim_vec_dict, sim_threshold)
 
 # classifier 2：Minimum similarity threshold based classification
 
@@ -153,12 +167,11 @@ class_match_set, class_nonmatch_set = \
 # classifier 3：Weighted similarity threshold based classification
 ################################################################# weight_vec = [1.0] * len(approx_comp_funct_list)
 
-# sim_threshold = 0.5
-# weight_vec = [2.0, 1.0, 2.0, 2.0, 2.0, 1.0]
-# class_match_set, class_nonmatch_set = \
-#             classification.weightedSimilarityClassify(sim_vec_dict,
-#                                                       weight_vec,
-#                                                       sim_threshold)
+sim_threshold = 0.74
+# weight_vec = [13.86, 13.86, 14.41, 7.53, 7.09] # 6.29] # weight2
+weight_vec = [13.86, 13.86, 14.41, 15.06, 14.18] # 12.57] # original
+class_match_set, class_nonmatch_set = \
+            classification.weightedSimilarityClassify(sim_vec_dict, weight_vec, sim_threshold)
 
 # classifier 4: A supervised decision tree classifier  ## pip install -U scikit-learn
 #

@@ -1,0 +1,105 @@
+Combined blocking results:
+first name 14853;middle name 14896+321;last_name 21755; stree-address 34172+231;suburb 18564;postcode 6077;
+
+blocking=> 7,3,1 (stree address); default comparison functions; classifier 1: 0.7;
+Blocking evaluation:
+  Reduction ratio:    0.992
+  Pairs completeness: 0.977
+  Pairs quality:      0.003
+Calculating confusion matrix using 10077 classified matches, 3178217 classified non-matches, and 10000 true matches
+  TP=9457, FP=620, FN=543, TN=399989380, FN_in_Filtered_Pairs=308
+Linkage evaluation:
+  Accuracy:    1.000
+  Precision:   0.938
+  Recall:      0.946
+  F-measure:   0.942
+
+blocking=> 7,3,1 (stree address); name->ja-wr, bag-dic for two; classifier 1: 0.7;
+Linkage evaluation:
+  Accuracy:    1.000
+  Precision:   0.610
+  Recall:      0.976
+  F-measure:   0.751
+
+blocking=> 7,3,1 (stree address); name->ja-wr, bag-dic for two; classifier 1: 0.5;
+Calculating confusion matrix using 522949 classified matches, 2665345 classified non-matches, and 10000 true matches
+  TP=9765, FP=513184, FN=235, TN=399476816, FN_in_Filtered_Pairs=0
+Linkage evaluation:
+  Accuracy:    0.999
+  Precision:   0.019
+  Recall:      0.977
+  F-measure:   0.037
+
+blocking=> 7,3,1 (stree address); name->ja-wr, bag-dic for two; classifier 1: 0.6;
+Calculating confusion matrix using 152141 classified matches, 3036153 classified non-matches, and 10000 true matches
+  TP=9765, FP=142376, FN=235, TN=399847624, FN_in_Filtered_Pairs=0
+Linkage evaluation:
+  Accuracy:    1.000
+  Precision:   0.064
+  Recall:      0.977
+  F-measure:   0.120
+
+blocking=> 7,3,1_default comparison functions on 6 attributes_classifier3.weight2.at.0.7
+Calculating confusion matrix using 9522 classified matches, 3178772 classified non-matches, and 10000 true matches
+  TP=8786, FP=736, FN=1214, TN=399989264, FN_in_Filtered_Pairs=979
+Linkage evaluation:
+  Accuracy:    1.000
+  Precision:   0.923
+  Recall:      0.879
+  F-measure:   0.900
+Total runtime required for linkage: 618.715 sec
+
+blocking->731-jaro_winkler_comp_on_names_and_default_comparison_functions_on_3_attributes-classifier3.weight.at.0.7
+Calculating confusion matrix using 11770 classified matches, 3176524 classified non-matches, and 10000 true matches
+  TP=9762, FP=2008, FN=238, TN=399987992, FN_in_Filtered_Pairs=3
+Linkage evaluation:
+  Accuracy:    1.000
+  Precision:   0.829
+  Recall:      0.976
+  F-measure:   0.897
+Total runtime required for linkage: 584.775 sec
+
+
+
+blocking->731-jaro_winkler_comp_on_names_and_default_comparison_functions_on_2_attributes-classifier3.weight.at.0.7
+Calculating confusion matrix using 10671 classified matches, 3177623 classified non-matches, and 10000 true matches
+  TP=9741, FP=930, FN=259, TN=399989070, FN_in_Filtered_Pairs=24
+Linkage evaluation:
+  Accuracy:    1.000
+  Precision:   0.913
+  Recall:      0.974
+  F-measure:   0.942
+
+
+
+to do: adjust weight number to 0.65,
+to do: try different comparsions
+blocking=> 7,3,1 (stree address); default comparison functions; classifier 3 with weight: 0.7;
+Calculating confusion matrix using 10041 classified matches, 3178253 classified non-matches, and 10000 true matches
+  TP=9461, FP=580, FN=539, TN=399989420, FN_in_Filtered_Pairs=304
+Linkage evaluation:
+  Accuracy:    1.000
+  Precision:   0.942
+  Recall:      0.946
+  F-measure:   0.944
+Total runtime required for linkage: 495.417 sec
+
+blocking->731-jaro_winkler_comp_on_names_and_default_comparison_functions_on_2_attributes-classifier3.weight.at.0.75
+Calculating confusion matrix using 9839 classified matches, 3178455 classified non-matches, and 10000 true matches
+  TP=9340, FP=499, FN=660, TN=399989501, FN_in_Filtered_Pairs=425
+Linkage evaluation:
+  Accuracy:    1.000
+  Precision:   0.949
+  Recall:      0.934
+  F-measure:   0.942
+Total runtime required for linkage: 649.932 sec
+
+blocking->731-jaro_winkler_comp_on_names_and_default_comparison_functions_on_2_attributes-classifier3.weight.at.0.74
+Calculating confusion matrix using 10018 classified matches, 3178276 classified non-matches, and 10000 true matches
+  TP=9484, FP=534, FN=516, TN=399989466, FN_in_Filtered_Pairs=281
+
+Linkage evaluation:
+  Accuracy:    1.000
+  Precision:   0.947
+  Recall:      0.948
+  F-measure:   0.948
