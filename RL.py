@@ -1,8 +1,5 @@
 # ============================================================================
-# Record linkage software for the COMP3430/COMP8430 Data Wrangling course, 
-# 2020.Version 1.0
-# Copyright (C) 2020 the Australian National University and
-# others. All Rights Reserved.
+# Record linkage software for the COMP3430/COMP8430 Data Wrangling course, 2020.Version 1.0 # Copyright (C) 2020 the Australian National University and others. All Rights Reserved.
 # =============================================================================
 """Main module for linking records from two files.
    This module calls the necessary modules to perform the functionalities of the record linkage process.
@@ -16,36 +13,31 @@ import comparison
 import classification
 import evaluation
 import saveLinkResult
-
 # =============================================================================
 # Variable names for loading datasets
 # ******** Uncomment to select a pair of datasets **************
 # Name of the corresponding file with true matching record pair
 # ***** Uncomment a file name corresponding to your selected datasets *******
 
-# 0 - input file: &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
-
 # datasetA_name = 'datasets/clean-A-1000.csv'
 # datasetB_name = 'datasets/clean-B-1000.csv'
 # truthfile_name = 'datasets/clean-true-matches-1000.csv'
-
-datasetA_name = 'datasets/little-dirty-A-10000.csv'
-datasetB_name = 'datasets/little-dirty-B-10000.csv'
-truthfile_name = 'datasets/little-dirty-true-matches-10000.csv'
-
+# datasetA_name = 'datasets/little-dirty-A-10000.csv'
+# datasetB_name = 'datasets/little-dirty-B-10000.csv'
+# truthfile_name = 'datasets/little-dirty-true-matches-10000.csv'
+# 0 - input file: &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+datasetA_name = 'datasets/data_wrangling_rl1_2020_u7188446.csv'
+datasetB_name = 'datasets/data_wrangling_rl2_2020_u7188446.csv'
+truthfile_name = 'datasets/data_wrangling_rlgt_2020_u7188446.csv'
 # &&& over
-
 headerA_line   = True  # Dataset A header line available - True or Flase
 headerB_line   = True  # Dataset B header line available - True or Flase
-
 # The two attribute numbers that contain the record identifiers
 rec_idA_col = 0
 rec_idB_col = 0
-
 # The list of attributes to be used either for blocking or linking
 #
 # For the example data sets used in COMP8430 data wrangling in 2020:
-# 
 #  0: rec_id
 #  1: first_name
 #  2: middle_name
@@ -59,10 +51,8 @@ rec_idB_col = 0
 # 10: state
 # 11: phone
 # 12: email
-
 attrA_list    = [1,2,3,4,6,7,8,9,10,11]
 attrB_list    = [1,2,3,4,6,7,8,9,10,11]
-
 # ******** In lab 3, explore different attribute sets for blocking ************
 # The list of attributes to use for blocking (all must occur in the above attribute lists)
 
@@ -71,6 +61,7 @@ attrB_list    = [1,2,3,4,6,7,8,9,10,11]
 blocking_attrA_list = [1]
 blocking_attrB_list = [1]
 
+# 2 -comparison method selection &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
 # ******** In lab 4, explore different comparison functions for different attributes 
 # The list of tuples (comparison function, attribute number in record A, attribute number in record B)
 exact_comp_funct_list = [(comparison.exact_comp, 1, 1),  # First name
@@ -85,62 +76,46 @@ approx_comp_funct_list = [(comparison.jaccard_comp, 1, 1),        # First name
                           (comparison.jaro_winkler_comp, 3, 3),   # Last name
                           (comparison.bag_dist_sim_comp, 7, 7),   # Address
                           (comparison.edit_dist_sim_comp, 8, 8),  # Suburb
-                          (comparison.exact_comp,10,10),          # State
+                          (comparison.exact_comp, 10, 10),          # State
                          ]
 
 # =============================================================================
 # Step 1: Load the two datasets from CSV files
-
 start_time = time.time()
-
-recA_dict = loadDataset.load_data_set(datasetA_name, rec_idA_col, \
-                                      attrA_list, headerA_line)
-recB_dict = loadDataset.load_data_set(datasetB_name, rec_idB_col, \
-                                      attrB_list, headerB_line)
-
+recA_dict = loadDataset.load_data_set(datasetA_name, rec_idA_col, attrA_list, headerA_line)
+recB_dict = loadDataset.load_data_set(datasetB_name, rec_idB_col, attrB_list, headerB_line)
 # Load data set of true matching pairs
 true_match_set = loadDataset.load_truth_data(truthfile_name)
-
 loading_time = time.time() - start_time
-
 # -----------------------------------------------------------------------------
 # Step 2: Block the datasets
-
 start_time = time.time()
-
 # Statistical linkage key (SLK-581) based blocking
-#
 fam_name_attr_ind = 3
 giv_name_attr_ind = 1
 dob_attr_ind      = 6
 gender_attr_ind   = 4
 
-# Select one blocking technique
+# Select one blocking technique from 3:
 # No blocking (all records in one block)
 # blockA_dict = blocking.noBlocking(recA_dict)
 # blockB_dict = blocking.noBlocking(recB_dict)
-
 # step 2 - blocking method selection &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
 
-# Simple attribute-based blocking
-#
+# blocking method 1： Simple attribute-based blocking
+
 # blockA_dict = blocking.simpleBlocking(recA_dict, blocking_attrA_list)
 # blockB_dict = blocking.simpleBlocking(recB_dict, blocking_attrB_list)
 
-# Phonetic (Soundex) based blocking
-#
-blockA_dict = blocking.phoneticBlocking(recA_dict, blocking_attrA_list)
-blockB_dict = blocking.phoneticBlocking(recB_dict, blocking_attrB_list)
+# blocking method 2： Phonetic (Soundex) based blocking
 
+# blockA_dict = blocking.phoneticBlocking(recA_dict, blocking_attrA_list)
+# blockB_dict = blocking.phoneticBlocking(recB_dict, blocking_attrB_list)
 
-# Statistical linkage key (SLK-581) based blocking
-#
-# blockA_dict = blocking.slkBlocking(recA_dict, fam_name_attr_ind, \
-#                                   giv_name_attr_ind, dob_attr_ind, \
-#                                   gender_attr_ind)
-# blockB_dict = blocking.slkBlocking(recB_dict, fam_name_attr_ind, \
-#                                   giv_name_attr_ind, dob_attr_ind, \
-#                                   gender_attr_ind)
+# blocking method 3： Statistical linkage key (SLK-581) based blocking
+
+blockA_dict = blocking.slkBlocking(recA_dict, fam_name_attr_ind, giv_name_attr_ind, dob_attr_ind, gender_attr_ind)
+blockB_dict = blocking.slkBlocking(recB_dict, fam_name_attr_ind, giv_name_attr_ind, dob_attr_ind, gender_attr_ind)
 
 blocking_time = time.time() - start_time
 
@@ -150,47 +125,33 @@ blocking.printBlockStatistics(blockA_dict, blockB_dict)
 
 # -----------------------------------------------------------------------------
 # Step 3: Compare the candidate pairs
-
 start_time = time.time()
-
-sim_vec_dict = comparison.compareBlocks(blockA_dict, blockB_dict, \
-                                        recA_dict, recB_dict, \
-                                        approx_comp_funct_list)
-
+sim_vec_dict = comparison.compareBlocks(blockA_dict, blockB_dict, recA_dict, recB_dict, approx_comp_funct_list)
 comparison_time = time.time() - start_time
 
 # -----------------------------------------------------------------------------
 # Step 4: Classify the candidate pairs
-
 start_time = time.time()
 
 # Exact matching based classification
-#
 # class_match_set, class_nonmatch_set = \
 #              classification.exactClassify(sim_vec_dict)
 
-# *********** In lab 5, explore different similarity threshold values *********
+# classifier 1： Similarity threshold based classification
 
-# Similarity threshold based classification
-#
-# sim_threshold = 0.5
-# class_match_set, class_nonmatch_set = \
-#             classification.thresholdClassify(sim_vec_dict, sim_threshold)
+sim_threshold = 0.5
+class_match_set, class_nonmatch_set = \
+            classification.thresholdClassify(sim_vec_dict, sim_threshold)
 
-# Minimum similarity threshold based classification
+# classifier 2：Minimum similarity threshold based classification
 
 # min_sim_threshold = 0.5
 # class_match_set, class_nonmatch_set = \
 #             classification.minThresholdClassify(sim_vec_dict,
 #                                                 min_sim_threshold)
 
-# *********** In lab 6, explore different weight vectors **********************
-
-# Weighted similarity threshold based classification
-#weight_vec = [1.0] * len(approx_comp_funct_list)
-#
-#
-# Lower weights for middle name and state
+# classifier 3：Weighted similarity threshold based classification
+################################################################# weight_vec = [1.0] * len(approx_comp_funct_list)
 
 # sim_threshold = 0.5
 # weight_vec = [2.0, 1.0, 2.0, 2.0, 2.0, 1.0]
@@ -199,30 +160,22 @@ start_time = time.time()
 #                                                       weight_vec,
 #                                                       sim_threshold)
 
-# A supervised decision tree classifier  ## pip install -U scikit-learn
+# classifier 4: A supervised decision tree classifier  ## pip install -U scikit-learn
 #
-class_match_set, class_nonmatch_set = \
-          classification.supervisedMLClassify(sim_vec_dict, true_match_set)
+# class_match_set, class_nonmatch_set = \
+#           classification.supervisedMLClassify(sim_vec_dict, true_match_set)
 
 classification_time = time.time() - start_time
 
-# -----------------------------------------------------------------------------
 # Step 5: Evaluate the classification
 
 # Get the number of record pairs compared
-#
 num_comparisons = len(sim_vec_dict)
-
 # Get the number of total record pairs to compared if no blocking used
-#
 all_comparisons = len(recA_dict) * len(recB_dict)
-
 # Get the list of identifiers of the compared record pairs
-#
 cand_rec_id_pair_list = sim_vec_dict.keys()
-
 # Blocking evaluation
-#
 rr = evaluation.reduction_ratio(num_comparisons, all_comparisons)
 pc = evaluation.pairs_completeness(cand_rec_id_pair_list, true_match_set)
 pq = evaluation.pairs_quality(cand_rec_id_pair_list, true_match_set)
@@ -234,7 +187,6 @@ print('  Pairs quality:      %.3f' % (pq))
 print('')
 
 # Linkage evaluation
-#
 linkage_result = evaluation.confusion_matrix(class_match_set,
                                              class_nonmatch_set,
                                              true_match_set,
@@ -259,7 +211,5 @@ print('Total runtime required for linkage: %.3f sec' % (linkage_time))
 output_file_name = "u7188446_RL.csv"
 
 saveLinkResult.save_linkage_set(output_file_name, class_match_set)
-
-# -----------------------------------------------------------------------------
 
 # End of program.
