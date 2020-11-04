@@ -1,0 +1,19 @@
+Method			        Reduc_Ratio	Completeness	Pairs Quality	Okay	blocks_A	blocks_b
+Soundex 7  street:	    0.998       0.899           0.012           Y       2278        2320        aggresive
+Soundex 8 suburb:	    0.999       0.844           0.015                   2241        2415        aggresive?
+Soundex 3 last name:    0.998		0.760		    0.011			        2472		2678	    Yes? 	
+Soundex 1 first name:	0.996		0.747		    0.004		    P	    1729		1934		
+Soundex 2 middle name:	0.995		0.733		    0.003			        2032		2169
+
+SLK: 			        1.000		0.493		    0.955
+Soundex 6 b-day:	    0.798       0.825           0.000                   53          61
+Soundex 4 gender:
+Soundex 12 email:       0.990       0.830           0.002                   2768        2741    
+
+Similarity calculation
+
+
+Classficaiton
+Accuracy    precision   recall  F-measure   TP      FP      FN      TN
+1.000       0.775       0.899   0.832       8992    2615    1008    399987385
+

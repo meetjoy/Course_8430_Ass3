@@ -167,16 +167,16 @@ start_time = time.time()
 # classifier 3：Weighted similarity threshold based classification
 ################################################################# weight_vec = [1.0] * len(approx_comp_funct_list)
 
-sim_threshold = 0.74
-# weight_vec = [13.86, 13.86, 14.41, 7.53, 7.09] # 6.29] # weight2
-weight_vec = [13.86, 13.86, 14.41, 15.06, 14.18] # 12.57] # original
-class_match_set, class_nonmatch_set = \
-            classification.weightedSimilarityClassify(sim_vec_dict, weight_vec, sim_threshold)
+# sim_threshold = 0.74
+# # weight_vec = [13.86, 13.86, 14.41, 7.53, 7.09] # 6.29] # weight2
+# weight_vec = [13.86, 13.86, 14.41, 15.06, 14.18] # 12.57] # original
+# class_match_set, class_nonmatch_set = \
+#             classification.weightedSimilarityClassify(sim_vec_dict, weight_vec, sim_threshold)
 
 # classifier 4: A supervised decision tree classifier  ## pip install -U scikit-learn
 #
-# class_match_set, class_nonmatch_set = \
-#           classification.supervisedMLClassify(sim_vec_dict, true_match_set)
+class_match_set, class_nonmatch_set = \
+          classification.supervisedMLClassify(sim_vec_dict, true_match_set)
 
 classification_time = time.time() - start_time
 

@@ -94,12 +94,50 @@ Linkage evaluation:
   F-measure:   0.942
 Total runtime required for linkage: 649.932 sec
 
+
+
+blocking->731-jaro_winkler_comp_on_names_and_default_comparison_functions_on_2_attributes-classifier3.weight.at.0.73
+Calculating confusion matrix using 10167 classified matches, 3178127 classified non-matches, and 10000 true matches
+  TP=9588, FP=579, FN=412, TN=399989421, FN_in_Filtered_Pairs=177
+Linkage evaluation:
+  Accuracy:    1.000
+  Precision:   0.943
+  Recall:      0.959
+  F-measure:   0.951
+Total runtime required for linkage: 307.435 sec
+
+
+
+blocking->731-jaro_winkler_comp_on_names_and_default_comparison_functions_on_2_attributes-classifier3.weight.at.0.735
+  Calculating confusion matrix using 10095 classified matches, 3178199 classified non-matches, and 10000 true matches
+  TP=9542, FP=553, FN=458, TN=399989447, FN_in_Filtered_Pairs=223
+Linkage evaluation:
+  Accuracy:    1.000
+  Precision:   0.945
+  Recall:      0.954
+  F-measure:   0.950
+Total runtime required for linkage: 297.729 sec
+
+blocking->731-jaro_winkler_comp_on_names_and_default_comparison_functions_on_2_attributes-classifier3.weight.at.0.745
+Calculating confusion matrix using 9923 classified matches, 3178371 classified non-matches, and 10000 true matches
+  TP=9409, FP=514, FN=591, TN=399989486, FN_in_Filtered_Pairs=356
+Linkage evaluation:
+  Accuracy:    1.000
+  Precision:   0.948
+  Recall:      0.941
+  F-measure:   0.945
+Total runtime required for linkage: 330.005 sec
+
+
+######################################################################################################################
 blocking->731-jaro_winkler_comp_on_names_and_default_comparison_functions_on_2_attributes-classifier3.weight.at.0.74
 Calculating confusion matrix using 10018 classified matches, 3178276 classified non-matches, and 10000 true matches
   TP=9484, FP=534, FN=516, TN=399989466, FN_in_Filtered_Pairs=281
-
 Linkage evaluation:
   Accuracy:    1.000
   Precision:   0.947
   Recall:      0.948
   F-measure:   0.948
+
+
+ #################### machine learning
